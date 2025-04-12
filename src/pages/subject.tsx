@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Container, Grid, TextField, Typography, Table, TableHead, TableBody, TableRow, TableCell, TableContainer, Paper } from '@mui/material';
+import {
+    Button, Container, Grid, TextField, Typography,
+    Table, TableHead, TableBody, TableRow, TableCell,
+    TableContainer, Paper
+} from '@mui/material';
 import { axiosGet, axiosPost } from '../utils/apis/axios';
 import API from '../configs/API';
 import { ToastTopHelper } from '@/utils/utils';
@@ -11,6 +15,10 @@ const SubjectPage: React.FC = () => {
     const [subjects, setSubjects] = useState<any[]>([]);
     const [newSubjectName, setNewSubjectName] = useState<string>('');
     const [newSubjectCode, setNewSubjectCode] = useState<string>('');
+
+    const [editingSubjectId, setEditingSubjectId] = useState<number | null>(null);
+    const [editingSubjectName, setEditingSubjectName] = useState<string>('');
+    const [editingSubjectCode, setEditingSubjectCode] = useState<string>('');
 
     useEffect(() => {
         const fetchSubjects = async () => {
@@ -38,6 +46,35 @@ const SubjectPage: React.FC = () => {
             setNewSubjectName('');
             setNewSubjectCode('');
             ToastTopHelper.success('Môn học đã được tạo');
+        }
+    };
+
+    const handleEditSubject = (subject: any) => {
+        setEditingSubjectId(subject.id);
+        setEditingSubjectName(subject.name);
+        setEditingSubjectCode(subject.code);
+    };
+
+    const handleSaveEdit = async () => {
+        if (!editingSubjectName || !editingSubjectCode || editingSubjectId === null) return;
+
+        const { success, data } = await axiosPost(API.SUBJECT.DETAIL(editingSubjectId), {
+            name: editingSubjectName,
+            code: editingSubjectCode,
+        }, 'put');
+
+        if (success) {
+            setSubjects(subjects.map((s) => (s.id === editingSubjectId ? data : s)));
+            ToastTopHelper.success('Cập nhật thành công');
+            setEditingSubjectId(null);
+        }
+    };
+
+    const handleDeleteSubject = async (id: number) => {
+        const { success } = await axiosPost(API.SUBJECT.DETAIL(id), {}, 'delete');
+        if (success) {
+            setSubjects(subjects.filter((s) => s.id !== id));
+            ToastTopHelper.success('Xóa thành công');
         }
     };
 
@@ -82,13 +119,42 @@ const SubjectPage: React.FC = () => {
                                         <TableRow>
                                             <TableCell>Tên Môn Học</TableCell>
                                             <TableCell>Mã Môn Học</TableCell>
+                                            <TableCell>Hành động</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                         {subjects.map((subject) => (
                                             <TableRow key={subject.id}>
-                                                <TableCell>{subject.name}</TableCell>
-                                                <TableCell>{subject.code}</TableCell>
+                                                {editingSubjectId === subject.id ? (
+                                                    <>
+                                                        <TableCell>
+                                                            <TextField
+                                                                value={editingSubjectName}
+                                                                onChange={(e) => setEditingSubjectName(e.target.value)}
+                                                                size="small"
+                                                            />
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <TextField
+                                                                value={editingSubjectCode}
+                                                                onChange={(e) => setEditingSubjectCode(e.target.value)}
+                                                                size="small"
+                                                            />
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Button size="small" onClick={handleSaveEdit}>Lưu</Button>
+                                                        </TableCell>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <TableCell>{subject.name}</TableCell>
+                                                        <TableCell>{subject.code}</TableCell>
+                                                        <TableCell>
+                                                            <Button size="small" onClick={() => handleEditSubject(subject)}>Sửa</Button>
+                                                            <Button size="small" color="error" onClick={() => handleDeleteSubject(subject.id)}>Xóa</Button>
+                                                        </TableCell>
+                                                    </>
+                                                )}
                                             </TableRow>
                                         ))}
                                     </TableBody>

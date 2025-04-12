@@ -31,6 +31,7 @@ const API = {
   SUBJECT: {
     LIST: `${API_ROOT}/accounts/subjects/`,
     CREATE: `${API_ROOT}/accounts/subjects/create/`,
+    DETAIL: (id) => `${API_ROOT}/accounts/subjects/${id}/`,
   },
   SUBJECT_SCORE: {
     CREATE: `${API_ROOT}/accounts/subject_score/create_update/`,
