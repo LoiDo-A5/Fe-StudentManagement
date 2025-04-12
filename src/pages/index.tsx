@@ -76,13 +76,17 @@ const HomePage: React.FC = () => {
     return (
         <PrivateRoute>
             <Box sx={{
-                height: "90vh",
-                width: "100%", marginTop: 8,
-                paddingRight: 20, paddingLeft: 20,
+                minHeight: "100vh",
+                width: "100%",
+                paddingTop: 8,
+                paddingRight: 2.5,
+                paddingLeft: 2.5,
                 backgroundImage: `url(${backgroundImage.src})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
+                display: "flex",
+                flexDirection: "column",
             }}>
                 <TabContext value={value}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

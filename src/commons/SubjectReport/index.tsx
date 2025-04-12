@@ -91,10 +91,7 @@ const SubjectReport: React.FC = () => {
             Môn: {subjectName} - Học kỳ: {semester}
           </Typography>
 
-          <TableContainer component={Paper} style={{
-            maxHeight: 400,
-            overflowY: 'auto',
-          }}>
+          <TableContainer component={Paper}>
             <Table>
               <TableHead>
                 <TableRow>

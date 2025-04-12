@@ -3,17 +3,17 @@ import HeaderPage from '../HeaderPage';
 import FooterPage from '../FooterPage';
 
 interface LayoutProps {
-    children: ReactNode;
-  }
+  children: ReactNode;
+}
 
-  const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div>
       <HeaderPage />
       <main>{children}</main>
 
-      <footer>
-        <FooterPage/>
+      <footer >
+        <FooterPage />
       </footer>
     </div>
   );

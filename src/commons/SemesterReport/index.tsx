@@ -79,10 +79,6 @@ const SemesterReport: React.FC = () => {
 
           <TableContainer
             component={Paper}
-            style={{
-              maxHeight: 400,
-              overflowY: 'auto',
-            }}
           >
             <Table stickyHeader>
               <TableHead>

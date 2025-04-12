@@ -125,10 +125,7 @@ const ListSubjectScorePage: React.FC = () => {
 
         {/* Display Subject Scores */}
         <Grid item xs={12}>
-          <TableContainer component={Paper} style={{
-            maxHeight: 400,
-            overflowY: 'auto',
-          }}>
+          <TableContainer component={Paper} >
             <Table>
               <TableHead>
                 <TableRow>
