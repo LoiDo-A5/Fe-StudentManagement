@@ -4,7 +4,7 @@ import {
     Table, TableHead, TableBody, TableRow, TableCell,
     TableContainer, Paper
 } from '@mui/material';
-import { axiosGet, axiosPost } from '../utils/apis/axios';
+import { axiosDelete, axiosGet, axiosPost } from '../utils/apis/axios';
 import API from '../configs/API';
 import { ToastTopHelper } from '@/utils/utils';
 import PrivateRoute from '@/commons/PrivateRoute';
@@ -71,11 +71,9 @@ const SubjectPage: React.FC = () => {
     };
 
     const handleDeleteSubject = async (id: number) => {
-        const { success } = await axiosPost(API.SUBJECT.DETAIL(id), {}, 'delete');
-        if (success) {
-            setSubjects(subjects.filter((s) => s.id !== id));
-            ToastTopHelper.success('Xóa thành công');
-        }
+        const { success } = await axiosDelete(API.SUBJECT.DETAIL(id));
+        setSubjects(subjects.filter((s) => s.id !== id));
+        ToastTopHelper.success('Xóa thành công');
     };
 
     return (
