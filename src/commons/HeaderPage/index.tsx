@@ -180,7 +180,7 @@ const HeaderPage: React.FC = () => {
                     whiteSpace: 'normal',
                     overflow: 'hidden',
                   }} onClick={handleClickChangeSystemAge} className={classes.menuItemHelp}>
-                    {'Thay đổi tuổi tối thiểu, tuổi tối đa, sĩ số tối đa của các lớp'}
+                    {'Thay đổi tuổi tối thiểu,tối đa, sĩ số lớp, điểm chuẩn'}
                   </MenuItem>
 
 

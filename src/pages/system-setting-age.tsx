@@ -11,10 +11,12 @@ const SystemSettingPage: React.FC = () => {
   const [minAge, setMinAge] = useState<number>(15);
   const [maxAge, setMaxAge] = useState<number>(20);
   const [maxStudentsPerClass, setMaxStudentsPerClass] = useState<number>(40);
+  const [passScore, setPassScore] = useState<number>(5.0);
 
   const [minAgeError, setMinAgeError] = useState('');
   const [maxAgeError, setMaxAgeError] = useState('');
   const [maxStudentsError, setMaxStudentsError] = useState('');
+  const [passScoreError, setPassScoreError] = useState('');
 
   useEffect(() => {
     const fetchSetting = async () => {
@@ -23,6 +25,7 @@ const SystemSettingPage: React.FC = () => {
         setMinAge(data.min_student_age);
         setMaxAge(data.max_student_age);
         setMaxStudentsPerClass(data.max_students_per_class);
+        setPassScore(data.pass_score);
       }
     };
     fetchSetting();
@@ -58,6 +61,13 @@ const SystemSettingPage: React.FC = () => {
       setMaxStudentsError('');
     }
 
+    if (isNaN(passScore) || passScore < 0 || passScore > 10) {
+      setPassScoreError('Điểm chuẩn phải từ 0 đến 10');
+      isValid = false;
+    } else {
+      setPassScoreError('');
+    }
+
     return isValid;
   };
 
@@ -68,6 +78,7 @@ const SystemSettingPage: React.FC = () => {
       min_student_age: minAge,
       max_student_age: maxAge,
       max_students_per_class: maxStudentsPerClass,
+      pass_score: passScore,
     });
 
     if (success) {
@@ -79,7 +90,7 @@ const SystemSettingPage: React.FC = () => {
     <PrivateRoute>
       <Container className={classes.background}>
         <Typography variant="h4" gutterBottom>
-          Cài Đặt tuổi tối thiểu, tuổi tối đa, sĩ số tối đa của các lớp
+          Cài đặt hệ thống
         </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12}>
@@ -113,6 +124,17 @@ const SystemSettingPage: React.FC = () => {
               onChange={(e) => setMaxStudentsPerClass(Number(e.target.value))}
               error={!!maxStudentsError}
               helperText={maxStudentsError}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Điểm chuẩn đạt môn"
+              type="number"
+              value={passScore}
+              onChange={(e) => setPassScore(Number(e.target.value))}
+              error={!!passScoreError}
+              helperText={passScoreError}
             />
           </Grid>
           <Grid item xs={12}>
