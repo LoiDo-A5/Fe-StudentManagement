@@ -37,11 +37,6 @@ const SignupForm: React.FC<SignupFormProps> = () => {
       return false;
     }
 
-    const fullNamePattern = /^[A-Za-zÀ-ÿ\s]+$/;
-    if (!fullNamePattern.test(fullName)) {
-      ToastTopHelper.error("Họ và tên không được chứa số");
-      return false;
-    }
 
     if (address.length > 60) {
       ToastTopHelper.error("Địa chỉ không được vượt quá 60 ký tự");
