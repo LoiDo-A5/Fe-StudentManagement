@@ -178,9 +178,14 @@ const SubjectScorePage: React.FC = () => {
                 options={students}
                 getOptionLabel={(option) => option.full_name || ''}
                 renderInput={(params) => <TextField {...params} label="Học Sinh" variant="outlined" />}
-                isOptionEqualToValue={(option, value) => option?.id === value.id}
+                isOptionEqualToValue={(option, value) => option?.id === value?.id}
                 disableClearable
                 fullWidth
+                renderOption={(props, option) => (
+                  <li {...props} key={option.id}>
+                    {option.full_name}
+                  </li>
+                )}
               />
             </Grid>
 
