@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Container, Grid, TextField, Typography, Select, MenuItem, InputLabel, FormControl, Table, TableHead, TableBody, TableRow, TableCell, TableContainer, Paper, Autocomplete } from '@mui/material';
+import { Box, Button, Container, Grid, TextField, Typography, Select, MenuItem, InputLabel, FormControl, Table, TableHead, TableBody, TableRow, TableCell, TableContainer, Paper, Autocomplete } from '@mui/material';
 import { axiosGet } from '@/utils/apis/axios';
 import API from '@/configs/API';
 import useStyles from './style';
@@ -60,11 +60,11 @@ const ListSubjectScorePage: React.FC = () => {
   };
 
   return (
-    <div className={classes.wrapContainer}>
-      <Typography variant="h4" gutterBottom>
+    <Box className={classes.wrapContainer} sx={{ px: { xs: 0, sm: 2 } }}>
+      <Typography variant="h4" gutterBottom sx={{ fontSize: { xs: 22, sm: 28, md: 34 }, fontWeight: 800 }}>
         Bảng Điểm Môn Học
       </Typography>
-      <Grid container spacing={4}>
+      <Grid container spacing={{ xs: 2, md: 4 }}>
         {/* Select Class */}
         <Grid item xs={12} md={4}>
           <FormControl fullWidth variant="outlined" margin="normal">
@@ -125,8 +125,8 @@ const ListSubjectScorePage: React.FC = () => {
 
         {/* Display Subject Scores */}
         <Grid item xs={12}>
-          <TableContainer component={Paper} >
-            <Table>
+          <TableContainer component={Paper} sx={{ overflowX: 'auto' }}>
+            <Table sx={{ minWidth: 760 }}>
               <TableHead>
                 <TableRow>
                   <TableCell>STT</TableCell>
@@ -151,7 +151,7 @@ const ListSubjectScorePage: React.FC = () => {
           </TableContainer>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

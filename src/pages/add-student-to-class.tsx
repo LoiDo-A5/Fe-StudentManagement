@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Container, Grid, TextField, Typography, FormControl, Table, TableHead, TableBody, TableRow, TableCell, TableContainer, Paper, Autocomplete, InputLabel, Select, MenuItem } from '@mui/material';
+import { Box, Button, Card, CardContent, Container, Grid, TextField, Typography, FormControl, Table, TableHead, TableBody, TableRow, TableCell, TableContainer, Paper, Autocomplete, InputLabel, Select, MenuItem } from '@mui/material';
 import { axiosGet, axiosPost } from '../utils/apis/axios';
 import API from '../configs/API';
 import { ToastTopHelper } from '@/utils/utils';
@@ -65,15 +65,17 @@ const AddStudentClass: React.FC = () => {
 
     return (
         <PrivateRoute>
-            <div className={classes.wrapContainer}>
+            <Box className={classes.wrapContainer}>
                 <Container maxWidth="lg">
-                    <Typography variant="h4" gutterBottom>
+                    <Card className={classes.pageCard}>
+                        <CardContent sx={{ p: { xs: 2, sm: 3, md: 4 } }}>
+                    <Typography variant="h4" gutterBottom sx={{ fontSize: { xs: 22, sm: 28, md: 34 }, fontWeight: 800 }}>
                         Thêm Học Sinh Vào Lớp
                     </Typography>
-                    <Grid container spacing={4}>
+                    <Grid container spacing={{ xs: 2, md: 4 }}>
                         {/* Chọn Học Sinh */}
                         <Grid item xs={12} md={6}>
-                            <Typography variant="h6" mb={2}>Chọn Học Sinh</Typography>
+                            <Typography variant="h6" sx={{ mb: 1.5, fontWeight: 700 }}>Chọn Học Sinh</Typography>
                             <Autocomplete
                                 value={selectedStudent}
                                 onChange={(event, newValue) => setSelectedStudent(newValue)}
@@ -88,7 +90,7 @@ const AddStudentClass: React.FC = () => {
 
                         {/* Chọn Lớp Học */}
                         <Grid item xs={12} md={6}>
-                            <Typography variant="h6">Chọn Lớp</Typography>
+                            <Typography variant="h6" sx={{ mb: 1.5, fontWeight: 700 }}>Chọn Lớp</Typography>
                             <FormControl fullWidth variant="outlined" margin="normal">
                                 <InputLabel>Chọn Lớp</InputLabel>
                                 <Select
@@ -112,13 +114,14 @@ const AddStudentClass: React.FC = () => {
                     </Grid>
 
                     {/* Thêm Học Sinh Vào Lớp */}
-                    <Grid container spacing={4} mt={4}>
+                    <Grid container spacing={{ xs: 2, md: 4 }} sx={{ mt: { xs: 2, md: 4 } }}>
                         <Grid item xs={12} md={6}>
                             <Button
                                 variant="contained"
                                 color="primary"
                                 fullWidth
                                 onClick={handleAddStudentToClass}
+                                sx={{ textTransform: 'none', py: 1.25 }}
                             >
                                 Thêm Học Sinh Vào Lớp
                             </Button>
@@ -126,11 +129,11 @@ const AddStudentClass: React.FC = () => {
                     </Grid>
 
                     {/* Danh sách Lớp Học */}
-                    <Grid container spacing={4} mt={4}>
+                    <Grid container spacing={{ xs: 2, md: 4 }} sx={{ mt: { xs: 2, md: 4 } }}>
                         <Grid item xs={12} md={6}>
-                            <Typography variant="h6">Danh Sách Lớp</Typography>
-                            <TableContainer component={Paper}>
-                                <Table>
+                            <Typography variant="h6" sx={{ mb: 1.5, fontWeight: 700 }}>Danh Sách Lớp</Typography>
+                            <TableContainer component={Paper} sx={{ overflowX: 'auto' }}>
+                                <Table sx={{ minWidth: 520 }}>
                                     <TableHead>
                                         <TableRow>
                                             <TableCell>Khối Lớp</TableCell>
@@ -152,8 +155,10 @@ const AddStudentClass: React.FC = () => {
                             </TableContainer>
                         </Grid>
                     </Grid>
+                        </CardContent>
+                    </Card>
                 </Container>
-            </div>
+            </Box>
         </PrivateRoute>
 
     );

@@ -4,6 +4,7 @@ const useStyles = makeStyles(() => ({
   wrapContainer: {
     minHeight: "90vh",
     marginBottom: 20,
+    paddingBottom: 12,
   },
 }));
 

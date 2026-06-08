@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Container, TextField, Typography, Grid, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
+import { Box, Button, Card, CardContent, Container, TextField, Typography, Grid, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
 import { axiosGet, axiosPut, axiosDelete } from '@/utils/apis/axios'; // You need to implement axiosDelete
 import API from '@/configs/API';
 import { ToastTopHelper } from '@/utils/utils';
@@ -88,22 +88,26 @@ const ClassSettingsPage: React.FC = () => {
 
     return (
         <PrivateRoute>
-            <Container className={classes.background}>
-                <Typography variant="h4" gutterBottom style={{ marginBottom: 30, marginLeft: -25 }}>
+            <Box className={classes.background}>
+                <Container maxWidth="lg">
+                    <Card className={classes.pageCard}>
+                        <CardContent sx={{ p: { xs: 2, sm: 3, md: 4 } }}>
+                <Typography variant="h4" gutterBottom sx={{ mb: 3, fontSize: { xs: 22, sm: 28, md: 34 }, fontWeight: 800 }}>
                     Quản Lý Lớp Học
                 </Typography>
-                <Grid container spacing={3}>
-                    <Grid container spacing={3}>
+                <Grid container spacing={{ xs: 2, md: 3 }}>
+                    <Grid container spacing={{ xs: 2, md: 3 }}>
                         <Grid item xs={12}>
-                            <Typography variant="h6">Chọn lớp học cần sửa đổi:</Typography>
+                            <Typography variant="h6" sx={{ mb: 1.5, fontWeight: 700 }}>Chọn lớp học cần sửa đổi:</Typography>
                             <Grid container spacing={2}>
                                 {classData.map(classInfo => (
-                                    <Grid item xs={4} key={classInfo.id}>
+                                    <Grid item xs={12} sm={6} md={4} key={classInfo.id}>
                                         <Button
                                             fullWidth
                                             variant="outlined"
                                             onClick={() => handleClassSelect(classInfo)}
                                             disabled={loading}
+                                            sx={{ py: 1.1, textTransform: 'none' }}
                                         >
                                             {`${classInfo.level_name} ${classInfo.class_name}`}
                                         </Button>
@@ -112,7 +116,7 @@ const ClassSettingsPage: React.FC = () => {
                                             color="secondary"
                                             onClick={() => handleDelete(classInfo.id)}
                                             disabled={loading}
-                                            style={{ marginTop: 10 }}
+                                            sx={{ mt: 1.25, textTransform: 'none' }}
                                         >
                                             Xóa
                                         </Button>
@@ -165,6 +169,7 @@ const ClassSettingsPage: React.FC = () => {
                                     fullWidth
                                     onClick={handleSave}
                                     disabled={loading}
+                                    sx={{ py: 1.25, textTransform: 'none' }}
                                 >
                                     {loading ? 'Đang lưu...' : 'Lưu thay đổi'}
                                 </Button>
@@ -172,7 +177,10 @@ const ClassSettingsPage: React.FC = () => {
                         </>
                     )}
                 </Grid>
-            </Container>
+                        </CardContent>
+                    </Card>
+                </Container>
+            </Box>
         </PrivateRoute>
     );
 };

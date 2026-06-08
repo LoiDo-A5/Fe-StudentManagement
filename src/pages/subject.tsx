@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-    Button, Container, Grid, TextField, Typography,
+    Box, Button, Card, CardContent, Container, Grid, TextField, Typography,
     Table, TableHead, TableBody, TableRow, TableCell,
     TableContainer, Paper
 } from '@mui/material';
@@ -78,15 +78,17 @@ const SubjectPage: React.FC = () => {
 
     return (
         <PrivateRoute>
-            <div className={classes.background}>
+            <Box className={classes.background}>
                 <Container maxWidth="lg">
-                    <Typography variant="h4" gutterBottom>
+                    <Card className={classes.pageCard}>
+                        <CardContent sx={{ p: { xs: 2, sm: 3, md: 4 } }}>
+                    <Typography variant="h4" gutterBottom sx={{ fontSize: { xs: 22, sm: 28, md: 34 }, fontWeight: 800 }}>
                         Quản lý Môn Học
                     </Typography>
-                    <Grid container spacing={4}>
+                    <Grid container spacing={{ xs: 2, md: 4 }}>
                         {/* Tạo Môn Học */}
                         <Grid item xs={12} md={6}>
-                            <Typography variant="h6">Tạo Môn Học Mới</Typography>
+                            <Typography variant="h6" sx={{ mb: 1.5, fontWeight: 700 }}>Tạo Môn Học Mới</Typography>
                             <TextField
                                 label="Tên Môn Học"
                                 fullWidth
@@ -103,16 +105,16 @@ const SubjectPage: React.FC = () => {
                                 onChange={(e) => setNewSubjectCode(e.target.value)}
                                 margin="normal"
                             />
-                            <Button variant="contained" color="primary" fullWidth onClick={handleCreateSubject}>
+                            <Button variant="contained" color="primary" fullWidth onClick={handleCreateSubject} sx={{ mt: 1, textTransform: 'none', py: 1.25 }}>
                                 Tạo Môn Học
                             </Button>
                         </Grid>
 
                         {/* Danh Sách Môn Học */}
                         <Grid item xs={12} md={6}>
-                            <Typography variant="h6" mb={2}>Danh Sách Môn Học</Typography>
-                            <TableContainer component={Paper}>
-                                <Table>
+                            <Typography variant="h6" sx={{ mb: 1.5, fontWeight: 700 }}>Danh Sách Môn Học</Typography>
+                            <TableContainer component={Paper} sx={{ overflowX: 'auto' }}>
+                                <Table sx={{ minWidth: 640 }}>
                                     <TableHead>
                                         <TableRow>
                                             <TableCell>Tên Môn Học</TableCell>
@@ -160,8 +162,10 @@ const SubjectPage: React.FC = () => {
                             </TableContainer>
                         </Grid>
                     </Grid>
+                        </CardContent>
+                    </Card>
                 </Container>
-            </div>
+            </Box>
         </PrivateRoute>
     );
 };

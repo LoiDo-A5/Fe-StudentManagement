@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, TextField, Grid, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, TextField, Grid, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { axiosGet } from '@/utils/apis/axios';
 import API from '@/configs/API';
 import PaginationCustom from '@/commons/PaginationCustom';
@@ -57,14 +57,14 @@ const ListStudent: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <Typography variant="h4" gutterBottom>
+    <Box>
+      <Typography variant="h4" gutterBottom sx={{ fontSize: { xs: 22, sm: 28, md: 34 }, fontWeight: 800 }}>
         Danh Sách Học Sinh
       </Typography>
 
       {/* Search Field */}
       <Grid container spacing={4} >
-        <Grid item xs={6} md={6} mt={2}>
+        <Grid item xs={12} md={6} mt={2}>
           <TextField
             label="Tìm kiếm theo Họ và Tên"
             variant="outlined"
@@ -73,7 +73,7 @@ const ListStudent: React.FC = () => {
             onChange={handleSearchChange} />
         </Grid>
 
-        <Grid item xs={6} md={6} >
+        <Grid item xs={12} md={6} >
           <FormControl fullWidth variant="outlined" margin="normal">
             <InputLabel>Chọn Lớp</InputLabel>
             <Select
@@ -101,8 +101,8 @@ const ListStudent: React.FC = () => {
         </Grid>
       </Grid>
 
-      <TableContainer component={Paper}>
-        <Table>
+      <TableContainer component={Paper} sx={{ overflowX: 'auto', mt: 1 }}>
+        <Table sx={{ minWidth: 760 }}>
           <TableHead>
             <TableRow>
               <TableCell>STT</TableCell>
@@ -135,7 +135,7 @@ const ListStudent: React.FC = () => {
           onChange={handlePageChange}
         />
       )}
-    </div>
+    </Box>
   );
 };
 

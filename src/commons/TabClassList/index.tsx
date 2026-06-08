@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Box, Container, FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { Box, FormControl, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import PaginationCustom from '../PaginationCustom';
 import moment from 'moment';
 import useStyles from './styles';
@@ -29,12 +29,12 @@ const TabClassList: React.FC<TabClassListProps> = ({
 
 
   return (
-    <div >
-      <Box mb={2}>
-        <div className={classes.titleRoom}>DANH SÁCH LỚP</div>
+    <Box>
+      <Box sx={{ mb: { xs: 2, md: 3 } }}>
+        <Typography className={classes.titleRoom}>DANH SÁCH LỚP</Typography>
       </Box>
 
-      <FormControl fullWidth sx={{ marginBottom: 4 }}>
+      <FormControl fullWidth sx={{ mb: { xs: 2, md: 4 } }}>
         <InputLabel id="class-select-label">Chọn lớp</InputLabel>
         <Select
           labelId="class-select-label"
@@ -51,8 +51,8 @@ const TabClassList: React.FC<TabClassListProps> = ({
         </Select>
       </FormControl>
 
-      <TableContainer component={Paper} sx={{ marginTop: 4 }}>
-        <Table>
+      <TableContainer component={Paper} sx={{ mt: { xs: 1.5, md: 4 }, overflowX: 'auto' }}>
+        <Table sx={{ minWidth: 760 }}>
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
@@ -84,7 +84,7 @@ const TabClassList: React.FC<TabClassListProps> = ({
           onChange={handlePageChange}
         />
       )}
-    </div>
+    </Box>
   );
 };
 

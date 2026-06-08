@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Container, Grid, TextField, Typography, Select, MenuItem, InputLabel, FormControl, Table, TableHead, TableBody, TableRow, TableCell, TableContainer, Paper } from '@mui/material';
+import { Box, Button, Card, CardContent, Container, Grid, TextField, Typography, Select, MenuItem, InputLabel, FormControl, Table, TableHead, TableBody, TableRow, TableCell, TableContainer, Paper } from '@mui/material';
 import { axiosGet, axiosPost } from '../utils/apis/axios';
 import API from '../configs/API';
 import { ToastTopHelper } from '@/utils/utils';
@@ -85,15 +85,17 @@ const ClassPage: React.FC = () => {
 
     return (
         <PrivateRoute>
-            <div className={classes.wrapContainer}>
+            <Box className={classes.wrapContainer}>
                 <Container maxWidth="lg">
-                    <Typography variant="h4" gutterBottom>
+                    <Card className={classes.pageCard}>
+                        <CardContent sx={{ p: { xs: 2, sm: 3, md: 4 } }}>
+                    <Typography variant="h4" gutterBottom sx={{ fontSize: { xs: 22, sm: 28, md: 34 }, fontWeight: 800 }}>
                         Quản lý Khối Lớp và Lớp Học
                     </Typography>
-                    <Grid container spacing={4}>
+                    <Grid container spacing={{ xs: 2, md: 4 }}>
                         {/* Khối lớp */}
                         <Grid item xs={12} md={6}>
-                            <Typography variant="h6">Tạo Khối Lớp Mới</Typography>
+                            <Typography variant="h6" sx={{ mb: 1.5, fontWeight: 700 }}>Tạo Khối Lớp Mới</Typography>
                             <TextField
                                 label="Tên Khối Lớp"
                                 fullWidth
@@ -102,14 +104,14 @@ const ClassPage: React.FC = () => {
                                 onChange={(e) => setNewClassLevel(e.target.value)}
                                 margin="normal"
                             />
-                            <Button variant="contained" color="primary" fullWidth onClick={handleCreateClassLevel}>
+                            <Button variant="contained" color="primary" fullWidth onClick={handleCreateClassLevel} sx={{ mt: 1, textTransform: 'none', py: 1.25 }}>
                                 Tạo Khối Lớp
                             </Button>
                         </Grid>
 
                         {/* Lớp học */}
                         <Grid item xs={12} md={6}>
-                            <Typography variant="h6">Tạo Lớp Mới</Typography>
+                            <Typography variant="h6" sx={{ mb: 1.5, fontWeight: 700 }}>Tạo Lớp Mới</Typography>
                             <FormControl fullWidth variant="outlined" margin="normal">
                                 <InputLabel>Chọn Khối Lớp</InputLabel>
                                 <Select
@@ -132,18 +134,18 @@ const ClassPage: React.FC = () => {
                                 onChange={(e) => setNewClassName(e.target.value)}
                                 margin="normal"
                             />
-                            <Button variant="contained" color="primary" fullWidth onClick={handleCreateClassName}>
+                            <Button variant="contained" color="primary" fullWidth onClick={handleCreateClassName} sx={{ mt: 1, textTransform: 'none', py: 1.25 }}>
                                 Tạo Lớp
                             </Button>
                         </Grid>
                     </Grid>
 
-                    <Grid container spacing={4} mt={4}>
+                    <Grid container spacing={{ xs: 2, md: 4 }} sx={{ mt: { xs: 2, md: 4 } }}>
                         {/* Danh sách Khối Lớp */}
                         <Grid item xs={12} md={6}>
-                            <Typography variant="h6">Danh Sách Khối Lớp</Typography>
-                            <TableContainer component={Paper}>
-                                <Table>
+                            <Typography variant="h6" sx={{ mb: 1.5, fontWeight: 700 }}>Danh Sách Khối Lớp</Typography>
+                            <TableContainer component={Paper} sx={{ overflowX: 'auto' }}>
+                                <Table sx={{ minWidth: 420 }}>
                                     <TableHead>
                                         <TableRow>
                                             <TableCell>Khối Lớp</TableCell>
@@ -162,9 +164,9 @@ const ClassPage: React.FC = () => {
 
                         {/* Danh sách Lớp Học */}
                         <Grid item xs={12} md={6}>
-                            <Typography variant="h6">Danh Sách Lớp</Typography>
-                            <TableContainer component={Paper}>
-                                <Table>
+                            <Typography variant="h6" sx={{ mb: 1.5, fontWeight: 700 }}>Danh Sách Lớp</Typography>
+                            <TableContainer component={Paper} sx={{ overflowX: 'auto' }}>
+                                <Table sx={{ minWidth: 520 }}>
                                     <TableHead>
                                         <TableRow>
                                             <TableCell>Khối Lớp</TableCell>
@@ -188,8 +190,10 @@ const ClassPage: React.FC = () => {
                         </Grid>
 
                     </Grid>
+                        </CardContent>
+                    </Card>
                 </Container>
-            </div>
+            </Box>
         </PrivateRoute >
     );
 };

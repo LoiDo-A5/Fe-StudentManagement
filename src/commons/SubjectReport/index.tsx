@@ -41,8 +41,8 @@ const SubjectReport: React.FC = () => {
   };
 
   return (
-    <Container className={classes.wrapContainer}>
-      <Typography variant="h4" gutterBottom>
+    <Container className={classes.wrapContainer} sx={{ px: { xs: 0, sm: 2 } }}>
+      <Typography variant="h4" gutterBottom sx={{ fontSize: { xs: 22, sm: 28, md: 34 }, fontWeight: 800 }}>
         Báo Cáo Tổng Kết Môn
       </Typography>
 
@@ -87,12 +87,12 @@ const SubjectReport: React.FC = () => {
 
       {reportData.length > 0 && (
         <>
-          <Typography variant="h6" gutterBottom style={{ marginTop: '20px' }}>
+          <Typography variant="h6" gutterBottom sx={{ mt: 2, fontSize: { xs: 15, sm: 18 } }}>
             Môn: {subjectName} - Học kỳ: {semester}
           </Typography>
 
-          <TableContainer component={Paper}>
-            <Table>
+          <TableContainer component={Paper} sx={{ overflowX: 'auto' }}>
+            <Table sx={{ minWidth: 760 }}>
               <TableHead>
                 <TableRow>
                   <TableCell>STT</TableCell>

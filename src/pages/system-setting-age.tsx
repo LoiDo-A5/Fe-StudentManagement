@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Container, TextField, Typography, Grid } from '@mui/material';
+import { Box, Button, Card, CardContent, Container, TextField, Typography, Grid } from '@mui/material';
 import { axiosGet, axiosPut } from '@/utils/apis/axios';
 import API from '@/configs/API';
 import { ToastTopHelper } from '@/utils/utils';
@@ -88,11 +88,14 @@ const SystemSettingPage: React.FC = () => {
 
   return (
     <PrivateRoute>
-      <Container className={classes.background}>
-        <Typography variant="h4" gutterBottom>
+      <Box className={classes.background}>
+        <Container maxWidth="md">
+          <Card className={classes.pageCard}>
+            <CardContent sx={{ p: { xs: 2, sm: 3, md: 4 } }}>
+        <Typography variant="h4" gutterBottom sx={{ fontSize: { xs: 22, sm: 28, md: 34 }, fontWeight: 800 }}>
           Cài đặt hệ thống
         </Typography>
-        <Grid container spacing={3}>
+        <Grid container spacing={{ xs: 2, md: 3 }}>
           <Grid item xs={12}>
             <TextField
               fullWidth
@@ -143,7 +146,10 @@ const SystemSettingPage: React.FC = () => {
             </Button>
           </Grid>
         </Grid>
-      </Container>
+            </CardContent>
+          </Card>
+        </Container>
+      </Box>
     </PrivateRoute>
   );
 };

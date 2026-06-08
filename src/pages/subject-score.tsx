@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Container, Grid, TextField, Typography, Select, MenuItem, InputLabel, FormControl, Table, TableHead, TableBody, TableRow, TableCell, TableContainer, Paper, Autocomplete } from '@mui/material';
+import { Box, Button, Card, CardContent, Container, Grid, TextField, Typography, Select, MenuItem, InputLabel, FormControl, Table, TableHead, TableBody, TableRow, TableCell, TableContainer, Paper, Autocomplete } from '@mui/material';
 import { axiosGet, axiosPost } from '../utils/apis/axios';
 import API from '../configs/API';
 import { ToastTopHelper } from '@/utils/utils';
@@ -112,12 +112,14 @@ const SubjectScorePage: React.FC = () => {
 
   return (
     <PrivateRoute>
-      <div className={classes.wrapContainer}>
+      <Box className={classes.wrapContainer}>
         <Container maxWidth="lg">
-          <Typography variant="h4" gutterBottom>
+          <Card className={classes.pageCard}>
+            <CardContent sx={{ p: { xs: 2, sm: 3, md: 4 } }}>
+          <Typography variant="h4" gutterBottom sx={{ fontSize: { xs: 22, sm: 28, md: 34 }, fontWeight: 800 }}>
             Nhập Điểm Môn Học
           </Typography>
-          <Grid container spacing={4}>
+          <Grid container spacing={{ xs: 2, md: 4 }}>
             {/* Chọn Khối Lớp */}
             <Grid item xs={12} md={4}>
               <FormControl fullWidth variant="outlined" margin="normal">
@@ -171,7 +173,7 @@ const SubjectScorePage: React.FC = () => {
 
             {/* Chọn Học Sinh */}
             <Grid item xs={12} md={6}>
-              <Typography variant="h6" mb={2}>Chọn Học Sinh</Typography>
+              <Typography variant="h6" sx={{ mb: 1.5, fontWeight: 700 }}>Chọn Học Sinh</Typography>
               <Autocomplete
                 value={selectedStudent}
                 onChange={(event, newValue) => setSelectedStudent(newValue)}
@@ -191,7 +193,7 @@ const SubjectScorePage: React.FC = () => {
 
             {/* Nhập điểm 15' */}
             <Grid item xs={12} md={6}>
-              <Typography variant="h6">Nhập Điểm 15’</Typography>
+              <Typography variant="h6" sx={{ fontWeight: 700 }}>Nhập Điểm 15’</Typography>
               <TextField
                 label="Nhập Điểm 15'"
                 fullWidth
@@ -210,7 +212,7 @@ const SubjectScorePage: React.FC = () => {
 
             {/* Nhập điểm 1 Tiết */}
             <Grid item xs={12} md={6}>
-              <Typography variant="h6">Nhập Điểm 1 Tiết</Typography>
+              <Typography variant="h6" sx={{ fontWeight: 700 }}>Nhập Điểm 1 Tiết</Typography>
               <TextField
                 label="Nhập Điểm 1 Tiết"
                 fullWidth
@@ -229,7 +231,7 @@ const SubjectScorePage: React.FC = () => {
 
             {/* Nhập điểm Cuối HK */}
             <Grid item xs={12} md={6}>
-              <Typography variant="h6">Nhập Điểm Cuối HK</Typography>
+              <Typography variant="h6" sx={{ fontWeight: 700 }}>Nhập Điểm Cuối HK</Typography>
               <TextField
                 label="Nhập Điểm Cuối HK"
                 fullWidth
@@ -248,13 +250,15 @@ const SubjectScorePage: React.FC = () => {
 
             {/* Submit Button */}
             <Grid item xs={12}>
-              <Button variant="contained" color="primary" fullWidth onClick={handleSubmit}>
+              <Button variant="contained" color="primary" fullWidth onClick={handleSubmit} sx={{ py: 1.25, textTransform: 'none' }}>
                 Cập nhật điểm
               </Button>
             </Grid>
           </Grid>
+            </CardContent>
+          </Card>
         </Container>
-      </div>
+      </Box>
     </PrivateRoute>
   );
 };

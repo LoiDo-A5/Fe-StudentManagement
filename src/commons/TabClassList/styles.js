@@ -20,6 +20,12 @@ const useStyles = makeStyles((theme) => ({
   titleRoom: {
     fontSize: 32,
     fontWeight: "bold",
+    letterSpacing: 0.4,
+    lineHeight: 1.2,
+    marginBottom: 12,
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 22,
+    },
   },
   listItemStyle: {
     backgroundColor: "#e1f5fe",
@@ -30,10 +36,13 @@ const useStyles = makeStyles((theme) => ({
   },
   pagination: {
     '&.MuiPagination-root': {
-      marginTop: 40,
+      marginTop: 24,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      [theme.breakpoints.down('sm')]: {
+        marginTop: 18,
+      },
     },
   },
 }));
