@@ -14,8 +14,10 @@ const API = {
   },
   FORUM: {
     SPACES: `${API_ROOT}/accounts/forum-spaces/`,
+    SPACE_DETAIL: (id) => `${API_ROOT}/accounts/forum-spaces/${id}/`,
     POSTS: `${API_ROOT}/accounts/forum-posts/`,
     COMMENTS: `${API_ROOT}/accounts/forum-comments/`,
+    COMMENT_DETAIL: (id) => `${API_ROOT}/accounts/forum-comments/${id}/`,
     TOGGLE_LIKE: (id) => `${API_ROOT}/accounts/forum-posts/${id}/like/`,
   },
   MESSAGE: {

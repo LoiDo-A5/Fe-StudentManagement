@@ -37,17 +37,32 @@ const SubjectScorePage: React.FC = () => {
       if (success) setSubjects(data);
     };
 
-    const fetchStudents = async () => {
-      const { success, data } = await axiosGet(API.AUTH.LIST_USER);
+    fetchClasses();
+    fetchSubjects();
+  }, []);
+
+  useEffect(() => {
+    const fetchStudentsByClass = async () => {
+      if (!selectedClass) {
+        setStudents([]);
+        setSelectedStudent(null);
+        return;
+      }
+
+      const { success, data } = await axiosGet(API.AUTH.LIST_STUDENT, {
+        params: {
+          class_name_id: selectedClass,
+          page_size: 100,
+        },
+      });
       if (success) {
-        setStudents(data.results);
+        setStudents(data.results || []);
       }
     };
 
-    fetchClasses();
-    fetchSubjects();
-    fetchStudents();
-  }, []);
+    setSelectedStudent(null);
+    fetchStudentsByClass();
+  }, [selectedClass]);
 
 
   const handleSubmit = async () => {
@@ -181,6 +196,8 @@ const SubjectScorePage: React.FC = () => {
                 getOptionLabel={(option) => option.full_name || ''}
                 renderInput={(params) => <TextField {...params} label="Học Sinh" variant="outlined" />}
                 isOptionEqualToValue={(option, value) => option?.id === value?.id}
+                disabled={!selectedClass}
+                noOptionsText={selectedClass ? 'Không có học sinh trong lớp này' : 'Hãy chọn lớp trước'}
                 disableClearable
                 fullWidth
                 renderOption={(props, option) => (

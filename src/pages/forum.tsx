@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PrivateRoute from '@/commons/PrivateRoute';
 import API from '@/configs/API';
-import { axiosGet, axiosPost } from '@/utils/apis/axios';
+import { axiosDelete, axiosGet, axiosPost } from '@/utils/apis/axios';
 import { RootState } from '@/utils/types';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
@@ -23,6 +23,7 @@ import {
   Typography,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
@@ -94,6 +95,7 @@ const ForumPage: React.FC = () => {
   const [loadingPosts, setLoadingPosts] = useState(false);
 
   const selectedSpace = useMemo(() => spaces.find((space) => space.id === selectedSpaceId) || null, [spaces, selectedSpaceId]);
+  const canManageForum = user?.role === 2 || user?.role === 3;
 
   const fetchSpaces = async () => {
     setLoadingSpaces(true);
@@ -166,12 +168,37 @@ const ForumPage: React.FC = () => {
     }
   };
 
+  const handleDeleteSpace = async (spaceId: number) => {
+    if (!canManageForum || !window.confirm('Xóa diễn đàn này? Tất cả bài viết và bình luận bên trong cũng sẽ bị xóa.')) return;
+
+    const { success } = await axiosDelete(API.FORUM.SPACE_DETAIL(spaceId));
+    if (success) {
+      const nextSpaces = spaces.filter((space) => space.id !== spaceId);
+      setSpaces(nextSpaces);
+      if (selectedSpaceId === spaceId) {
+        setSelectedSpaceId(nextSpaces[0]?.id || null);
+        setPosts([]);
+      }
+    }
+  };
+
+  const handleDeleteComment = async (commentId: number) => {
+    if (!canManageForum || !selectedSpaceId || !window.confirm('Xóa bình luận này?')) return;
+
+    const { success } = await axiosDelete(API.FORUM.COMMENT_DETAIL(commentId));
+    if (success) {
+      await fetchPosts(selectedSpaceId);
+    }
+  };
+
   const handleSubmitComment = async (postId: number) => {
     const content = commentDraft[postId]?.trim();
     if (!content || !selectedSpaceId) return;
 
     const { success } = await axiosPost(API.FORUM.COMMENTS, {
+      post: postId,
       post_id: postId,
+      parent: replyTarget.postId === postId ? replyTarget.commentId : null,
       parent_id: replyTarget.postId === postId ? replyTarget.commentId : null,
       content,
     });
@@ -215,6 +242,17 @@ const ForumPage: React.FC = () => {
               >
                 Trả lời
               </Button>
+              {canManageForum && (
+                <Button
+                  size="small"
+                  color="error"
+                  startIcon={<DeleteOutlineIcon fontSize="small" />}
+                  sx={{ mt: 1, ml: 1, textTransform: 'none' }}
+                  onClick={() => handleDeleteComment(comment.id)}
+                >
+                  Xóa
+                </Button>
+              )}
             </Box>
           </Stack>
         </Paper>
@@ -356,6 +394,19 @@ const ForumPage: React.FC = () => {
                             {space.description || 'Không có mô tả'}
                           </Typography>
                         </Box>
+                        {canManageForum && (
+                          <IconButton
+                            color="error"
+                            size="small"
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              handleDeleteSpace(space.id);
+                            }}
+                            sx={{ border: '1px solid rgba(239,68,68,0.2)', borderRadius: 2 }}
+                          >
+                            <DeleteOutlineIcon fontSize="small" />
+                          </IconButton>
+                        )}
                       </Stack>
                     </Paper>
                   ))}
