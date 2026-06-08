@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
+import Button from '@mui/material/Button';
+import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Avatar, Box, Divider, IconButton, Menu, MenuItem, Tooltip } from '@mui/material';
@@ -17,8 +19,6 @@ const HeaderPage: React.FC = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const user = useSelector((state: RootState) => state.auth.account.user);
-
-  console.log('user', user.role)
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isClient, setIsClient] = useState(false);
@@ -75,6 +75,10 @@ const HeaderPage: React.FC = () => {
     router.push(Routes.ClassSettingPage);
   }
 
+  const handleClickForum = () => {
+    router.push(Routes.Forum);
+  };
+
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -92,6 +96,7 @@ const HeaderPage: React.FC = () => {
               flexGrow: 1,
               display: 'flex',
               alignItems: 'center',
+              gap: 1.5,
             }}
           >
             <Image
@@ -99,8 +104,26 @@ const HeaderPage: React.FC = () => {
               src={Logo}
               alt=""
               className={classes.logoChatRoom}
-              style={{ marginRight: '20px' }}
+              style={{ marginRight: '8px' }}
             />
+            <Button
+              onClick={handleClickForum}
+              startIcon={<ForumOutlinedIcon />}
+              variant="outlined"
+              sx={{
+                color: 'white',
+                borderColor: 'rgba(255,255,255,0.45)',
+                borderRadius: 999,
+                textTransform: 'none',
+                px: 2,
+                '&:hover': {
+                  borderColor: 'white',
+                  backgroundColor: 'rgba(255,255,255,0.08)',
+                },
+              }}
+            >
+              Diễn đàn học tập
+            </Button>
           </Typography>
 
 

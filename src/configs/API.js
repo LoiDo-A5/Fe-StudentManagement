@@ -12,6 +12,12 @@ const API = {
   ROOM: {
     LIST_ROOM: `${API_ROOT}/accounts/rooms/`,
   },
+  FORUM: {
+    SPACES: `${API_ROOT}/accounts/forum-spaces/`,
+    POSTS: `${API_ROOT}/accounts/forum-posts/`,
+    COMMENTS: `${API_ROOT}/accounts/forum-comments/`,
+    TOGGLE_LIKE: (id) => `${API_ROOT}/accounts/forum-posts/${id}/like/`,
+  },
   MESSAGE: {
     LIST_MESSAGES: `${API_ROOT}/accounts/messages/`,
     LIST_DIRECT_MESSAGES: `${API_ROOT}/accounts/direct_messages/`,

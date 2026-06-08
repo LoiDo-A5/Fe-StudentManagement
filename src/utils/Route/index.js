@@ -8,6 +8,7 @@ const Routes = {
   AddStudentToClass: "/add-student-to-class",
   Subject: "/subject",
   SubjectScore: "/subject-score",
+  Forum: "/forum",
   SystemSettingPage: "/system-setting-age",
   ClassSettingPage: "/class-settings",
 };
