@@ -12,6 +12,11 @@ import {
   Card,
   CardContent,
   Chip,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Divider,
   FormControl,
   IconButton,
@@ -93,6 +98,8 @@ const ForumPage: React.FC = () => {
   const [commentDraft, setCommentDraft] = useState<Record<number, string>>({});
   const [loadingSpaces, setLoadingSpaces] = useState(false);
   const [loadingPosts, setLoadingPosts] = useState(false);
+  const [deleteSpaceTarget, setDeleteSpaceTarget] = useState<ForumSpace | null>(null);
+  const [isDeletingSpace, setIsDeletingSpace] = useState(false);
 
   const selectedSpace = useMemo(() => spaces.find((space) => space.id === selectedSpaceId) || null, [spaces, selectedSpaceId]);
   const canManageForum = user?.role === 2 || user?.role === 3;
@@ -107,6 +114,7 @@ const ForumPage: React.FC = () => {
       }
     }
     setLoadingSpaces(false);
+    return success ? data : null;
   };
 
   const fetchPosts = async (spaceId: number) => {
@@ -169,17 +177,38 @@ const ForumPage: React.FC = () => {
   };
 
   const handleDeleteSpace = async (spaceId: number) => {
-    if (!canManageForum || !window.confirm('Xóa diễn đàn này? Tất cả bài viết và bình luận bên trong cũng sẽ bị xóa.')) return;
+    if (!canManageForum) return;
 
-    const { success } = await axiosDelete(API.FORUM.SPACE_DETAIL(spaceId));
+    const space = spaces.find((item) => item.id === spaceId) || null;
+    setDeleteSpaceTarget(space);
+  };
+
+  const handleCloseDeleteSpaceModal = () => {
+    if (isDeletingSpace) return;
+    setDeleteSpaceTarget(null);
+  };
+
+  const handleConfirmDeleteSpace = async () => {
+    if (!canManageForum || !deleteSpaceTarget) return;
+
+    setIsDeletingSpace(true);
+    const deletedSpaceId = deleteSpaceTarget.id;
+    const { success } = await axiosDelete(API.FORUM.SPACE_DETAIL(deletedSpaceId));
     if (success) {
-      const nextSpaces = spaces.filter((space) => space.id !== spaceId);
-      setSpaces(nextSpaces);
-      if (selectedSpaceId === spaceId) {
+      const latestSpaces = await fetchSpaces();
+      const nextSpaces = latestSpaces || spaces.filter((space) => space.id !== deletedSpaceId);
+
+      if (selectedSpaceId === deletedSpaceId) {
         setSelectedSpaceId(nextSpaces[0]?.id || null);
-        setPosts([]);
+        if (!nextSpaces.length) {
+          setPosts([]);
+        }
+      } else if (selectedSpaceId) {
+        await fetchPosts(selectedSpaceId);
       }
     }
+    setIsDeletingSpace(false);
+    setDeleteSpaceTarget(null);
   };
 
   const handleDeleteComment = async (commentId: number) => {
@@ -600,6 +629,51 @@ const ForumPage: React.FC = () => {
           </Stack>
         </Box>
       </Box>
+      <Dialog
+        open={Boolean(deleteSpaceTarget)}
+        onClose={handleCloseDeleteSpaceModal}
+        maxWidth="xs"
+        fullWidth
+        PaperProps={{
+          sx: {
+            borderRadius: 3,
+            p: 0.5,
+          },
+        }}
+      >
+        <DialogTitle sx={{ fontWeight: 800, pb: 1 }}>
+          Xóa diễn đàn này?
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText sx={{ color: 'text.primary', lineHeight: 1.7 }}>
+            Tất cả bài viết và bình luận bên trong cũng sẽ bị xóa.
+          </DialogContentText>
+          {deleteSpaceTarget?.title && (
+            <Typography sx={{ mt: 1.5 }} fontWeight={700}>
+              {deleteSpaceTarget.title}
+            </Typography>
+          )}
+        </DialogContent>
+        <DialogActions sx={{ px: 3, pb: 2.5 }}>
+          <Button
+            onClick={handleCloseDeleteSpaceModal}
+            disabled={isDeletingSpace}
+            sx={{ textTransform: 'none' }}
+          >
+            Hủy
+          </Button>
+          <Button
+            onClick={handleConfirmDeleteSpace}
+            disabled={isDeletingSpace}
+            color="error"
+            variant="contained"
+            startIcon={<DeleteOutlineIcon />}
+            sx={{ textTransform: 'none' }}
+          >
+            {isDeletingSpace ? 'Đang xóa...' : 'Xóa'}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </PrivateRoute>
   );
 };

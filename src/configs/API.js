@@ -9,6 +9,9 @@ const API = {
     LIST_USER: `${API_ROOT}/accounts/user/`,
     LIST_STUDENT: `${API_ROOT}/accounts/user/list_student/`,
   },
+  AI: {
+    CHAT: `${API_ROOT}/accounts/ai-chat/`,
+  },
   ROOM: {
     LIST_ROOM: `${API_ROOT}/accounts/rooms/`,
   },

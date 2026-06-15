@@ -19,9 +19,10 @@ const MyApp = ({ Component, pageProps }) => {
 
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setAxiosDefaultAuthToken(token);
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+    if (accessToken && refreshToken) {
+      setAxiosDefaultAuthToken(accessToken, refreshToken);
     }
   }, []);
 

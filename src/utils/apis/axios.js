@@ -105,7 +105,9 @@ async function axiosCall(method, ...args) {
       try {
         const { access, refresh } = await refreshToken();
         reactLocalStorage.set("accessToken", access);
-        reactLocalStorage.set("refreshToken", refresh);
+        if (refresh) {
+          reactLocalStorage.set("refreshToken", refresh);
+        }
         axios.defaults.headers["Authorization"] = `Bearer ${access}`;
         response = await axios[method](...args);
       } catch (refreshError) {

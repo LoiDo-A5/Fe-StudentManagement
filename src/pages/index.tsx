@@ -14,6 +14,7 @@ import ListStudent from '@/commons/ListStudent';
 import SubjectReport from '@/commons/SubjectReport';
 import SemesterReport from '@/commons/SemesterReport';
 import backgroundImage from "../images/background2.jpg";
+import AiStudyChatBox from '@/commons/AiStudyChatBox';
 
 const HomePage: React.FC = () => {
   const classes = useStyles();
@@ -163,6 +164,7 @@ const HomePage: React.FC = () => {
             </CardContent>
           </Card>
         </Box>
+        <AiStudyChatBox />
       </Box>
     </PrivateRoute>
   );
